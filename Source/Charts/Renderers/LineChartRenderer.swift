@@ -559,6 +559,17 @@ open class LineChartRenderer: LineRadarRenderer
                 
                 _xBounds.set(chart: dataProvider, dataSet: dataSet, animator: animator)
 
+                                for x in _xBounds {
+                    guard let e = dataSet.entryForIndex(x) else { break }
+                    if e.y < min {
+                        min = e.y
+                    }
+                    
+                    if e.y > max {
+                        max = e.y
+                    }
+                }
+
                 for j in _xBounds
                 {
                     guard let e = dataSet.entryForIndex(j) else { break }
@@ -579,6 +590,8 @@ open class LineChartRenderer: LineRadarRenderer
                     
                     if dataSet.isDrawValuesEnabled
                     {
+                                                if e.y == max || e.y == min {
+
                         context.drawText(formatter.stringForValue(e.y,
                                                                   entry: e,
                                                                   dataSetIndex: i,
@@ -589,6 +602,7 @@ open class LineChartRenderer: LineRadarRenderer
                                          angleRadians: angleRadians,
                                          attributes: [.font: valueFont,
                                                       .foregroundColor: dataSet.valueTextColorAt(j)])
+                    }
                     }
                     
                     if let icon = e.icon, dataSet.isDrawIconsEnabled
