@@ -551,7 +551,8 @@ open class LineChartRenderer: LineRadarRenderer
                 
                 // make sure the values do not interfear with the circles
                 var valOffset = Int(dataSet.circleRadius * 1.75)
-                
+                var min = 0.0
+                var max = 0.0
                 if !dataSet.isDrawCirclesEnabled
                 {
                     valOffset = valOffset / 2
